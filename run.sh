@@ -34,3 +34,6 @@ set -e
     );
   done
 )
+
+# NOTE(dkorolev): It looks like `audio.wav.txt` without any timekeys will be created, and is best to be used. As in:
+# for i in $(find . -iname audio.wav.txt | sort); do echo; echo $i ; echo ; cat $i ; done
