@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# To run: `docker build`, and `docker run -v $PATH_TO_MP4_FILES:/data`.
+
+# To collate the output: See below.
+
 set -e
 
 (
