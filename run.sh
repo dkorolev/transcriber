@@ -1,0 +1,36 @@
+#!/bin/bash
+
+set -e
+
+(
+  cd /data;
+  for DIR in $(find . -type d | sort); do
+    (
+      cd $DIR;
+      if [ -f audio.wav ] ; then
+        echo "Already has 'audio.wav' in $DIR."
+      else
+        FN=$(ls -S *.mp4 | head -n 1);
+        if [ "$FN" != "" ] ; then
+          rm -f audio.tmp.wav
+          echo "Generating '$DIR/audio.wav'."
+          ffmpeg -i "$FN" -ar 16000 -ac 1 -c:a pcm_s16le audio.tmp.wav
+          mv audio.tmp.wav audio.wav
+          echo "Generated '$DIR/audio.wav'."
+        fi
+      fi
+
+      if [ -f audio.wav ] ; then
+        if [ -f audio.txt ] ; then
+          echo "Already has 'audio.txt' in $DIR."
+        else
+          IN="$PWD/audio.wav"
+          echo "Generating '$DIR/audio.txt'."
+          (cd /whisper.cpp; ./build/bin/whisper-cli -m models/ggml-medium.bin -l ru -f "$IN" --output-txt) | tee audio.tmp.txt
+          mv audio.tmp.txt audio.txt
+          echo "Generated '$DIR/audio.txt'."
+        fi
+      fi
+    );
+  done
+)
