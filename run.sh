@@ -30,7 +30,7 @@ set -e
         else
           IN="$PWD/audio.wav"
           echo "Generating '$DIR/audio.txt'."
-          (cd /whisper.cpp; ./build/bin/whisper-cli -m models/ggml-medium.bin -l ru -f "$IN" --output-txt) | tee audio.tmp.txt
+          (cd /whisper.cpp; ./build/bin/whisper-cli -m models/ggml-large-v3.bin -l ru -f "$IN" --output-txt) | tee audio.tmp.txt
           mv audio.tmp.txt audio.txt
           echo "Generated '$DIR/audio.txt'."
         fi

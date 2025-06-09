@@ -11,7 +11,7 @@ RUN (cd whisper.cpp; make -j)
 
 RUN apk add wget
 
-RUN (cd whisper.cpp; ./models/download-ggml-model.sh medium)
+RUN (cd whisper.cpp; ./models/download-ggml-model.sh large-v3)
 
 RUN apk add bash
 RUN apk add ffmpeg
